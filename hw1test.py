@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 ##一阶微分 一阶精度 向前差分
 def u(x):
@@ -44,7 +45,30 @@ for dx in deltax:
     errors_2diff.append(double_diff(x,dx)-u_2rdiff(x))
     
 
+# 转换为 NumPy 数组（如果你用的是列表）
+errors_diff = np.array(errors_diff)
+errors_2diff = np.array(errors_2diff)
 
+
+
+# 第一阶导数误差图
+plt.plot(deltax, errors_diff, label='1st Derivative Error', color='blue')
+
+# 第二阶导数误差图
+plt.plot(deltax, errors_2diff, label='2nd Derivative Error', color='red')
+
+# 设置对数坐标轴（可选）
+plt.xscale('log')   # x轴为对数坐标（可选）
+plt.yscale('log')   # y轴为对数坐标（可选）
+
+# 添加图例、标题、标签等
+plt.title('Error vs. Δx')
+plt.xlabel('Δx (Step size)')
+plt.ylabel('Error')
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()
 
     
 
