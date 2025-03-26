@@ -81,7 +81,8 @@ def cal(x, deltax):
 
 
 x=1.0
-deltax=np.linspace(1e-5,0.1,10000)
+deltax=np.linspace(1e-7,0.1,int(1e4))
+dx=deltax[1]-deltax[0]
 for f in range(1,5):
     flag=f
     errors_cdiff, errors_fdiff, errors_2cdiff, errors_2fdiff = cal(x, deltax)
@@ -91,10 +92,10 @@ for f in range(1,5):
                header='deltax   errors_cdiff   errors_fdiff   errors_2cdiff   errors_2fdiff')
     
     plt.rcParams['font.family'] = 'SimSun' ##中文
-    plt.plot(deltax, errors_2fdiff, label='1阶精度的二阶微分误差', color='orange')
-    plt.plot(deltax, errors_fdiff, label='1阶精度的一阶微分误差', color='green')
-    plt.plot(deltax, errors_cdiff, label='2阶精度一阶微分', color='blue')
-    plt.plot(deltax, errors_2cdiff, label='2阶精度二阶微分', color='red')
+    plt.plot(deltax, errors_2fdiff, label=f'1阶精度的二阶微分误差,步长={dx}', color='orange')
+    plt.plot(deltax, errors_fdiff, label=f'1阶精度的一阶微分误差,步长={dx}', color='green')
+    plt.plot(deltax, errors_cdiff, label=f'2阶精度一阶微分,步长={dx}', color='blue')
+    plt.plot(deltax, errors_2cdiff, label=f'2阶精度二阶微分,步长={dx}', color='red')
     # 添加图例、标题、标签等
     plt.title(f'误差随Δx变化（函数类型 flag={flag}）')
     plt.xlabel('Δx (Step size)')
@@ -102,7 +103,7 @@ for f in range(1,5):
     plt.legend()
     plt.grid(True)
     plt.tight_layout()
-    plt.savefig(f"error_with_function_{flag}.svg", bbox_inches='tight')
+    plt.savefig(f"error_with_function{flag}_with_dx={dx}.svg", bbox_inches='tight')
     plt.show()
 
 '''
