@@ -62,13 +62,10 @@ def cal(x, deltax):
     errors_fdiff = []
     errors_2cdiff = []
     errors_2fdiff = []
-    i=1
 
     for dx in deltax:
         u1_real = u_rdiff(x)
         u2_real = u_2rdiff(x)
-        i=i+1
-        print(i)
         x1=c_diff(x, dx) - u1_real
         errors_cdiff.append(x1)               #2阶
         errors_fdiff.append(f_diff(x, dx) - u1_real)               #1阶
@@ -90,7 +87,7 @@ def cal(x, deltax):
 
 
 x=np.float32(1.0)
-deltax=np.linspace(1e-7,0.001,1000,dtype=np.float32)
+deltax=np.linspace(1e-7,1e-3,10000,dtype=np.float32)
 start=deltax[0]
 stop=deltax[-1]
 dx=deltax[1]-deltax[0]
@@ -103,10 +100,10 @@ for idx, f in enumerate(range(1, 5)):
     errors_cdiff, errors_fdiff, errors_2cdiff, errors_2fdiff = cal(x, deltax)
     
     # 保存对应数据
-    #filename =f"新的errors_output_with_dx{dx}_flag{flag}.txt"
-    #data = np.column_stack((deltax, errors_cdiff, errors_fdiff, errors_2cdiff, errors_2fdiff))
-    #np.savetxt(filename, data,
-    #           header='deltax   errors_cdiff   errors_fdiff   errors_2cdiff   errors_2fdiff')
+    filename =f"新的errors_output_with_dx{dx}_flag{flag}.txt"
+    data = np.column_stack((deltax, errors_cdiff, errors_fdiff, errors_2cdiff, errors_2fdiff))
+    np.savetxt(filename, data,
+               header='deltax   errors_cdiff   errors_fdiff   errors_2cdiff   errors_2fdiff')
 
     # 找到对应子图位置
     ax = axs[idx // 2][idx % 2]

@@ -81,7 +81,7 @@ def cal(x, deltax):
 
 
 x=1.0
-deltax=np.linspace(1e-7,10,int(1e3))
+deltax=np.linspace(1e-7,1e-3,10000)
 start=deltax[0]
 stop=deltax[-1]
 dx=deltax[1]-deltax[0]
