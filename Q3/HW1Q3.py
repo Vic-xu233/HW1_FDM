@@ -81,7 +81,7 @@ def cal(x, deltax):
 
 
 x=1.0
-deltax=np.linspace(1e-7,1e-5,int(1e3))
+deltax=np.linspace(1e-7,10,int(1e3))
 start=deltax[0]
 stop=deltax[-1]
 dx=deltax[1]-deltax[0]
@@ -101,7 +101,7 @@ for idx, f in enumerate(range(1, 5)):
 
     # 找到对应子图位置
     ax = axs[idx // 2][idx % 2]
-    
+    '''
     ax.plot(deltax, errors_2fdiff, label='1阶精度 二阶微分', color='orange')
     ax.plot(deltax, errors_fdiff, label='1阶精度 一阶微分', color='green')
     ax.plot(deltax, errors_cdiff, label='2阶精度 一阶微分', color='blue')
@@ -111,7 +111,7 @@ for idx, f in enumerate(range(1, 5)):
     ax.loglog(deltax, errors_fdiff, label='1阶精度 一阶微分', color='green')
     ax.loglog(deltax, errors_cdiff, label='2阶精度 一阶微分', color='blue')
     ax.loglog(deltax, errors_2cdiff, label='2阶精度 二阶微分', color='red')
-    '''
+    
     ax.set_title(f'flag = {flag}')
     ax.set_xlabel('Δx')
     ax.set_ylabel('errors')
@@ -120,7 +120,8 @@ for idx, f in enumerate(range(1, 5)):
 
 plt.suptitle(f"差分误差随 Δx({start},{stop}) 变化（4类函数对比)dx ≈ {dx:.2e}", fontsize=16)
 plt.tight_layout(rect=[0, 0, 1, 0.96])  # 给标题留空间
-plt.savefig(f"n误差变化图,Δx({start},{stop}),dx ≈ {dx:.2e}.svg", bbox_inches='tight')
+plt.savefig(f"n误差变化图,Δx({start},{stop}),dx ≈ {dx:.2e}.png",dpi=600, bbox_inches='tight')
+
 plt.show()
 
 '''
