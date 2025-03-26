@@ -6,7 +6,7 @@ k=2
 def u(x):##函数
     match flag:
         case 1:
-            u=sin(k*x)
+            u=np.sin(k*x)
         case 2:
             u=x**2
         case 3:
@@ -17,7 +17,7 @@ def u(x):##函数
 def u_rdiff(x):##函数解析一阶导数
     match flag:
         case 1:
-            u=k*cos(k*x)
+            u=k*np.cos(k*x)
         case 2:
             u=2*x
         case 3:
@@ -28,7 +28,7 @@ def u_rdiff(x):##函数解析一阶导数
 def u_2rdiff(x):##函数解析二阶导数
     match flag:
         case 1:
-            u=-k*k*sin(k*x)
+            u=-k*k*np.sin(k*x)
         case 2:
             u=2
         case 3:
@@ -82,6 +82,7 @@ def cal(x, deltax):
     return errors_cdiff, errors_fdiff, errors_2cdiff, errors_2fdiff
 
 
+
 x=1.0
 deltax=np.linspace(1e-7,0.1,100)
 errors_cdiff, errors_fdiff, errors_2cdiff, errors_2fdiff = cal(x, deltax)
@@ -89,6 +90,16 @@ errors_cdiff, errors_fdiff, errors_2cdiff, errors_2fdiff = cal(x, deltax)
 data = np.column_stack((deltax, errors_cdiff, errors_fdiff, errors_2cdiff, errors_2fdiff))
 np.savetxt('errors_output_with_dx.txt', data,
            header='deltax   errors_cdiff   errors_fdiff   errors_2cdiff   errors_2fdiff')
+
+
+x=np.float32(1.0)
+deltax=np.linspace(1e-7,0.1,100,dtype=np.float32)
+errors_cdiff, errors_fdiff, errors_2cdiff, errors_2fdiff = cal(x, deltax)
+
+data = np.column_stack((deltax, errors_cdiff, errors_fdiff, errors_2cdiff, errors_2fdiff))
+np.savetxt('errors_output_with_dx_float32.txt', data,
+           header='deltax   errors_cdiff   errors_fdiff   errors_2cdiff   errors_2fdiff')
+print("精度=",deltax.dtype,errors_cdiff[3].dtype,errors_2fdiff[2].dtype)
 
 
 # 转换为 NumPy 数组（如果你用的是列表）
