@@ -103,11 +103,11 @@ x0, x1 = deltax[4], deltax[-5]
 y0, y1 = errors_cdiff[4], errors_cdiff[-5]
 y2, y3 = errors_2fdiff[4], errors_2fdiff[-5]
 
+plt.rcParams['font.family'] = 'SimSun' ##中文
 
-# 二阶精度误差图
+#二阶精度误差图
 plt.figure()  # 显式创建新图
 plt.plot(deltax, errors_cdiff, label='1st C-Derivative Error', color='blue')
-plt.plot([x0, x1], [y0, y1], '--', color='gray', label='辅助直线')
 plt.plot(deltax, errors_2cdiff, label='2nd C-Derivative Error', color='red')
 # 添加图例、标题、标签等
 plt.title('Error vs. Δx')
@@ -119,9 +119,12 @@ plt.savefig("二阶精度error_comparison.svg", bbox_inches='tight')
 # 一阶精度误差图
 plt.figure()  # 显式创建新图
 
-plt.plot(deltax, errors_2fdiff, label='2nd F-Derivative Error', color='orange')
-plt.plot(deltax, errors_fdiff, label='1st F-Derivative Error', color='green')
-plt.plot([x0, x1], [y2, y3], '--', color='gray', label='辅助直线')
+plt.plot(deltax, errors_2fdiff, label='2nd F-Derivative Error(1阶精度的二阶微分误差)', color='orange')
+plt.plot(deltax, errors_fdiff, label='1st F-Derivative Error(1阶精度的一阶微分误差)', color='green')
+plt.plot(deltax, errors_cdiff, label='1st C-Derivative Error(2阶精度一阶微分)', color='blue')
+plt.plot(deltax, errors_2cdiff, label='2nd C-Derivative Error(2阶精度二阶微分)', color='red')
+plt.plot([x0, x1], [y2, y3], '--', color='gray', label='辅助直线1')
+plt.plot([x0, x1], [errors_fdiff[4], errors_fdiff[-5]], '--', color='gray', label='辅助直线2')
 # 添加图例、标题、标签等
 plt.title('Error2 vs. Δx')
 plt.xlabel('Δx (Step size)')
@@ -129,7 +132,7 @@ plt.ylabel('Error')
 plt.legend()
 plt.grid(True)
 plt.tight_layout()
-plt.savefig("一阶精度error_comparison.svg", bbox_inches='tight')
+plt.savefig("error_comparison.svg", bbox_inches='tight')
 plt.show()
     
 
