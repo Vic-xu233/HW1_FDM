@@ -1,3 +1,8 @@
+'''
+所有变量均为32位精度
+'''
+
+
 import numpy as np
 import matplotlib.pyplot as plt
 flag=1  ##选择对哪个函数进行差分
@@ -57,22 +62,22 @@ def dou_tri_diff(x,dx):         ##四格点  1阶精度
     u_dtcdiff=u_dtcdiff/(dx*dx)
     return u_dtcdiff
 
-def cal(x, deltax):
-    errors_cdiff = []
-    errors_fdiff = []
-    errors_2cdiff = []
-    errors_2fdiff = []
+def cal(x, deltax):          #计算误差并存储在列表中
+    errors_cdiff = []        #中间差分误差
+    errors_fdiff = []       #前向差分误差
+    errors_2cdiff = []        #中心二阶差分误差
+    errors_2fdiff = []        #一阶精度二阶差分误差
 
     for dx in deltax:
         u1_real = u_rdiff(x)
         u2_real = u_2rdiff(x)
         x1=c_diff(x, dx) - u1_real
-        errors_cdiff.append(x1)               #2阶
+        errors_cdiff.append(x1)                                    #2阶
         errors_fdiff.append(f_diff(x, dx) - u1_real)               #1阶
-        errors_2cdiff.append(double_diff(x, dx) - u2_real)         #2阶
-        errors_2fdiff.append(dou_tri_diff(x, dx) - u2_real)        #1阶
+        errors_2cdiff.append(double_diff(x, dx) - u2_real)         #2阶 2次导
+        errors_2fdiff.append(dou_tri_diff(x, dx) - u2_real)        #1阶 2次导
 
-    errors_cdiff = np.abs(errors_cdiff)
+    errors_cdiff = np.abs(errors_cdiff)     #取绝对值便于画图
     errors_fdiff = np.abs(errors_fdiff)
     errors_2cdiff = np.abs(errors_2cdiff)
     errors_2fdiff = np.abs(errors_2fdiff)
@@ -83,8 +88,6 @@ def cal(x, deltax):
     print("cdiff==",errors_2fdiff.dtype)
     '''
     return errors_cdiff, errors_fdiff, errors_2cdiff, errors_2fdiff
-
-
 
 x=np.float32(1.0)
 deltax=np.linspace(1e-7,1e-3,10000,dtype=np.float32)

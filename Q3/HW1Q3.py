@@ -57,11 +57,11 @@ def dou_tri_diff(x,dx):         ##四格点  1阶精度
     u_dtcdiff=u_dtcdiff/(dx*dx)
     return u_dtcdiff
 
-def cal(x, deltax):
-    errors_cdiff = []
-    errors_fdiff = []
-    errors_2cdiff = []
-    errors_2fdiff = []
+def cal(x, deltax): #计算误差并存储在列表中
+    errors_cdiff = [] #中间差分误差
+    errors_fdiff = [] #前向差分误差
+    errors_2cdiff = [] #中心二阶差分误差
+    errors_2fdiff = [] #一阶精度二阶差分误差
 
     for dx in deltax:
         u1_real = u_rdiff(x)
@@ -71,7 +71,7 @@ def cal(x, deltax):
         errors_2cdiff.append(double_diff(x, dx) - u2_real)         #2阶
         errors_2fdiff.append(dou_tri_diff(x, dx) - u2_real)        #1阶
 
-    errors_cdiff = np.abs(errors_cdiff)
+    errors_cdiff = np.abs(errors_cdiff)          #取绝对值便于画图
     errors_fdiff = np.abs(errors_fdiff)
     errors_2cdiff = np.abs(errors_2cdiff)
     errors_2fdiff = np.abs(errors_2fdiff)
