@@ -2,8 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 flag=2  ##选择对哪个函数进行差分
 k=2
-##一阶微分 一阶精度 向前差分
-def u(x):
+
+def u(x):##函数
     match flag:
         case 1:
             u=sin(k*x)
@@ -12,7 +12,7 @@ def u(x):
         case _:
             u=x**3
     return u
-def u_rdiff(x):
+def u_rdiff(x):##函数解析一阶导数
     match flag:
         case 1:
             u=k*cos(k*x)
@@ -21,7 +21,7 @@ def u_rdiff(x):
         case _:
             u=3*x**2
     return u
-def u_2rdiff(x):
+def u_2rdiff(x):##函数解析二阶导数
     match flag:
         case 1:
             u=-k*k*sin(k*x)
@@ -33,7 +33,7 @@ def u_2rdiff(x):
 
 def f_diff(x,dx):                   ##前向差分一阶精度
     u_fdiff=(u(x+dx)-u(x))/dx
-    return u_diff 
+    return u_fdiff 
 
 def c_diff(x,dx):                    ##中间差分，二阶精度
     u_cdiff=(u(x+dx)-u(x-dx))/(2*dx)
@@ -51,7 +51,6 @@ def double_diff(x,dx):         ##三格点 二阶精度
     u_double_diff=(u(x+dx)-2*u(x)+u(x-dx))/(dx*dx)
     return u_double_diff
 
-
 def dou_tri_diff(x,dx):         ##四格点  1阶精度
     xi_1=x+dx
     xi_2=x+2*dx
@@ -61,21 +60,31 @@ def dou_tri_diff(x,dx):         ##四格点  1阶精度
     return u_dtcdiff
 
 x=1.0
-deltax=np.linspace(1e-7,0.1,10000)
-errors_diff=[]
-errors_2diff=[]
+deltax=np.linspace(1e-7,0.1,100)
+errors_cdiff=[]
+errors_fdiff=[]
+
+errors_2cdiff=[]
+errors_2fdiff=[]
 
 for dx in deltax:
-    print(c_diff(x,dx))
-    errors_diff.append(c_diff(x,dx)-u_rdiff(x))
-    errors_2diff.append(double_diff(x,dx)-u_2rdiff(x))
-    
-#print(errors_diff)
+    u1_real=u_rdiff(x)
+    u2_real=u_2rdiff(x)
+    errors_cdiff.append(c_diff(x,dx)-u1_real)
+    errors_fdiff.append(f_diff(x,dx)-u1_real)
+    errors_2cdiff.append(double_diff(x,dx)-u2_real)
+    errors_2fdiff.append(dou_tri_diff(x,dx)-u2_real)
+
+for i in range(len(errors_fdiff)):
+    print(errors_cdiff[i],"---",errors_fdiff[i])
+
+for i in range(len(errors_2fdiff)):
+    print(errors_2cdiff[i],"---",errors_2fdiff[i])
 
 
 # 转换为 NumPy 数组（如果你用的是列表）
-errors_diff = np.array(errors_diff)
-errors_2diff = np.array(errors_2diff)
+errors_diff = np.array(errors_cdiff)
+errors_2diff = np.array(errors_2cdiff)
 
 
 
