@@ -61,19 +61,22 @@ def dou_tri_diff(x,dx):         ##四格点  1阶精度
 
 x=1.0
 deltax=np.linspace(1e-7,0.1,100)
+
 errors_cdiff=[]
 errors_fdiff=[]
-
 errors_2cdiff=[]
 errors_2fdiff=[]
+def cal(x,dx,deltax):
+    for dx in deltax:
+        u1_real=u_rdiff(x)
+        u2_real=u_2rdiff(x)
+        errors_cdiff.append(c_diff(x,dx)-u1_real)
+        errors_fdiff.append(f_diff(x,dx)-u1_real)
+        errors_2cdiff.append(double_diff(x,dx)-u2_real)
+        errors_2fdiff.append(dou_tri_diff(x,dx)-u2_real)
+    return 
 
-for dx in deltax:
-    u1_real=u_rdiff(x)
-    u2_real=u_2rdiff(x)
-    errors_cdiff.append(c_diff(x,dx)-u1_real)
-    errors_fdiff.append(f_diff(x,dx)-u1_real)
-    errors_2cdiff.append(double_diff(x,dx)-u2_real)
-    errors_2fdiff.append(dou_tri_diff(x,dx)-u2_real)
+
 
 for i in range(len(errors_fdiff)):
     print(errors_cdiff[i],"---",errors_fdiff[i])
@@ -89,6 +92,7 @@ errors_2diff = np.array(errors_2cdiff)
 
 
 # 第一阶导数误差图
+'''
 plt.plot(deltax, errors_diff, label='1st Derivative Error', color='blue')
 
 # 第二阶导数误差图
@@ -104,6 +108,7 @@ plt.legend()
 plt.grid(True)
 plt.tight_layout()
 plt.show()
+'''
 
     
 
