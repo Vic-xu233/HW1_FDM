@@ -83,21 +83,6 @@ data = np.column_stack((deltax, errors_cdiff, errors_fdiff, errors_2cdiff, error
 np.savetxt('errors_output_with_dx.txt', data,
            header='deltax   errors_cdiff   errors_fdiff   errors_2cdiff   errors_2fdiff')
 
-'''
-##32位精度
-x=np.float32(1.0)
-deltax=np.linspace(1e-7,0.1,100,dtype=np.float32)
-errors_cdiff, errors_fdiff, errors_2cdiff, errors_2fdiff = cal(x, deltax)
-
-data = np.column_stack((deltax, errors_cdiff, errors_fdiff, errors_2cdiff, errors_2fdiff))
-np.savetxt('errors_output_with_dx_float32.txt', data,
-           header='deltax   errors_cdiff   errors_fdiff   errors_2cdiff   errors_2fdiff')
-print("精度=",deltax.dtype,errors_cdiff[3].dtype,errors_2fdiff[2].dtype)
-
-'''
-# 转换为 NumPy 数组（如果你用的是列表）
-#errors_diff = np.array(errors_cdiff)
-#errors_2diff = np.array(errors_2cdiff)
 
 x0, x1 = deltax[4], deltax[-5]
 y0, y1 = errors_cdiff[4], errors_cdiff[-5]
