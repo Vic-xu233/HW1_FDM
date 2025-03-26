@@ -1,25 +1,34 @@
 import numpy as np
 import matplotlib.pyplot as plt
-flag=1
+flag=2  ##选择对哪个函数进行差分
+k=2
 ##一阶微分 一阶精度 向前差分
 def u(x):
-    match x:
+    match flag:
         case 1:
-            
+            u=sin(k*x)
         case 2:
-            print("这是2")
+            u=x**2
         case _:
-            print("默认情况")
-    u=x**3
-    #u=sin(x)
+            u=x**3
     return u
 def u_rdiff(x):
-    u=3*x**2
-    #u=cos(x)
+    match flag:
+        case 1:
+            u=k*cos(k*x)
+        case 2:
+            u=2*x
+        case _:
+            u=3*x**2
     return u
 def u_2rdiff(x):
-    u=6*x
-    #u=-sin(x)
+    match flag:
+        case 1:
+            u=-k*k*sin(k*x)
+        case 2:
+            u=2
+        case _:
+            u=6*x
     return u
 
 def f_diff(x,dx):                   ##前向差分一阶精度
